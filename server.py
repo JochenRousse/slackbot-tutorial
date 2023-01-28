@@ -28,10 +28,14 @@ def get_next_rex_date_from_gsheet(person):
 
     rows = df.loc[df['Membre #1'].str.upper() == person.upper()]
 
+    for index, row in rows.iterrows():
+        if datetime.strptime(row['Date'], '%d/%m/%Y') < datetime.now():
+            rows.drop(index, inplace=True)
+
     if rows.empty:
         return None
     else:
-        date = rows.iloc[-1]['Date']
+        date = rows.iloc[0]['Date']
         if datetime.strptime(date, '%d/%m/%Y') > datetime.now():
             return date
         else:
