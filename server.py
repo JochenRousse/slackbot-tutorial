@@ -35,11 +35,7 @@ def get_next_rex_date_from_gsheet(person):
     if rows.empty:
         return None
     else:
-        date = rows.iloc[0]['Date']
-        if datetime.strptime(date, '%d/%m/%Y') > datetime.now():
-            return date
-        else:
-            return None
+        return rows.iloc[0]['Date']
 
 
 @app.route("/slack/t-rex", methods=["POST"])
